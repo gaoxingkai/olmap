@@ -1,58 +1,78 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <div id="map">
+
+    </div>
   </div>
 </template>
 
 <script>
+import 'ol/ol.css';
+import Map from 'ol/Map';
+import View from 'ol/View';
+import {defaults as defaultControls, ScaleLine} from 'ol/control';
+import TileLayer from 'ol/layer/Tile';
+import XYZ from 'ol/source/XYZ'
+
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: String,
+  },
+  data(){
+    return {
+      map:null,
+    }
+  },
+  created () {
+    
+  },
+  mounted(){
+    this.mapInit(); //map初始化
+  },
+  methods:{
+    // map初始化
+    mapInit(){
+      // 地图的本质是一个一个的图层类似ps
+      var layers = [
+        // 新建一个地图图层
+        new TileLayer({
+            source: new XYZ({ //加载地图的路径url
+              url: "http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}"
+            }),
+            visible: true //指示该图层是否可见
+          })
+      ];
+
+      this.map = new Map({
+        controls: defaultControls().extend([
+          new ScaleLine({
+            units: 'degrees'
+          })
+        ]),
+        layers: layers,
+        target: 'map',
+        view: new View({
+          projection: 'EPSG:4326', //使用这个坐标系
+          center: [103.9323, 30.67], // 地图中心点的经纬度[经度，纬度]当前的这个经纬度为成都
+          zoom: 12 //当前地图的放大层级为12级别
+        })
+      });
+    }
   }
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  #map{
+    width:100%;
+    height:100%;
+    min-width: 200px;
+    min-height: 600px;
+  }
+</style>
+<style>
+  #map .ol-viewport{
+    min-height: 600px;
+  }
 </style>
