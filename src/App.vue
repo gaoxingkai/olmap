@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div>
+    <div class="buttonDiv">
       <button :class="current === item.componentsName?'activeButton':''" @click="tabMap(item)" v-for="(item,index) in mapList" :key="index">{{ item.mapName }}</button>
     </div>
     <div :is="current"></div>
@@ -77,5 +77,11 @@ export default {
 }
 button{
   outline:none;
+}
+.buttonDiv{
+  padding:10px;
+}
+.buttonDiv button{
+  margin: 0 20px;
 }
 </style>

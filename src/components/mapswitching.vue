@@ -15,7 +15,8 @@ import View from 'ol/View'; //地图视图
 import TileLayer from 'ol/layer/Tile'; //地图的图层
 import { transform } from "ol/proj" //引入openlayer 坐标转换的
 import OSM from 'ol/source/OSM'  //加载地图OSM
-import BingMaps from 'ol/source/BingMaps'  //加载地图BingMaps 
+import XYZ from 'ol/source/XYZ'  //加载地图的
+// import BingMaps from 'ol/source/BingMaps'  //加载地图BingMaps 
 
 export default {
   name: 'HelloWorld',
@@ -43,9 +44,12 @@ export default {
 
         // 这个是一个地图底图
         this.bingMapLayer = new TileLayer({
-            source: new BingMaps({
-                key: 'AkjzA7OhS4MIBjutL21bkAop7dc41HSE0CNTR5c6HJy8JKc7U9U9RveWJrylD3XJ',
-                imagerySet: 'Road'
+            // source: new BingMaps({
+            //     key: 'AkjzA7OhS4MIBjutL21bkAop7dc41HSE0CNTR5c6HJy8JKc7U9U9RveWJrylD3XJ',
+            //     imagerySet: 'Road'
+            // })
+            source: new XYZ({
+                url: 'http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             })
         });
         // 这个是一个地图底图
