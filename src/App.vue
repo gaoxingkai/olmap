@@ -13,6 +13,9 @@ import mapnavigation from './components/MapNavigation.vue'
 import olmap from './components/map.vue'
 import restrictedmap from './components/restrictedmap.vue'
 import mapswitching from './components/mapswitching.vue'
+import iconAndTips from './components/iconAndTips'
+import styleFeature from './components/styleFeature'
+import makeLine from './components/makeLine'
 
 export default {
   name: 'app',
@@ -22,6 +25,9 @@ export default {
     olmap,
     restrictedmap,
     mapswitching,
+    iconAndTips,
+    styleFeature,
+    makeLine,
   },
   data(){
     return {
@@ -47,6 +53,19 @@ export default {
           mapName:'地图切换',
           componentsName:'mapswitching'
         },
+        {
+          mapName:'地图icon1',
+          componentsName:'iconAndTips'
+        },
+        {
+          mapName:'地图icon2---style+feature',
+          componentsName:'styleFeature'
+        },
+         {
+          mapName:'绘制一条线',
+          componentsName:'makeLine'
+        },
+
         
       ]
     }

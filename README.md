@@ -1,6 +1,7 @@
 # gis
 # 基于vue3.0
 ## Project setup
+#### 图标的定位位置和理想的不一致，暂时先不研究这个；iconAndTips.vue
 ```
 npm install
 ```
