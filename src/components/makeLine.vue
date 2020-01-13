@@ -15,7 +15,8 @@ import Map from 'ol/Map'; //init map
 import View from 'ol/View'; //地图视图
 import TileLayer from 'ol/layer/Tile'; //地图的图层
 import { transform } from "ol/proj" //引入openlayer 坐标转换的
-import OSM from 'ol/source/OSM'  //加载地图的
+// import OSM from 'ol/source/OSM'  //加载地图的
+import XYZ from 'ol/source/XYZ';
 import Draw from 'ol/interaction/Draw'; //互动绘图
 import VectorLayer from 'ol/layer/Vector'
 import {Vector} from 'ol/source';
@@ -50,7 +51,9 @@ export default {
         this.layers.push(
             new TileLayer(
                 {
-                    source: new OSM(),
+                    source: new XYZ({
+                      url:'http://mt2.google.cn/vt/lyrs=y&hl=zh-CN&gl=CN&src=app&x={x}&y={y}&z={z}&s=G'
+                    }),
                     visible: true //指示该图层是否可见
                 }
             )

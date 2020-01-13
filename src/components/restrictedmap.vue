@@ -14,7 +14,7 @@ import View from 'ol/View'; //地图视图
 // import {defaults as defaultControls, ScaleLine} from 'ol/control';
 import TileLayer from 'ol/layer/Tile'; //地图的图层
 // import XYZ from 'ol/source/XYZ'  //加载地图的
-import { transform } from "ol/proj" //引入openlayer 坐标转换的
+// import { transform } from "ol/proj" //引入openlayer 坐标转换的
 import OSM from 'ol/source/OSM'  //加载地图的
 
 export default {
@@ -50,7 +50,9 @@ export default {
         // 初始化view
         this.view = new View({
             // 设置成都为地图中心，此处进行坐标转换， 把EPSG:4326的坐标，转换为EPSG:3857坐标，因为ol默认使用的是EPSG:3857坐标
-            center: transform([104.06, 30.67], 'EPSG:4326', 'EPSG:3857'),
+            // center: transform([104.06, 30.67], 'EPSG:4326', 'EPSG:3857'), //使用这句会使fitToChengdu方法打不成自己想要的
+            center: [104.06, 30.67],
+            projection: 'EPSG:4326', //（默认为'EPSG：3857'）这里设置为4326
             zoom: 10
         })
         this.map = new Map(
