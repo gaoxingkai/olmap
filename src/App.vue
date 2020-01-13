@@ -16,6 +16,8 @@ import mapswitching from './components/mapswitching.vue'
 import iconAndTips from './components/iconAndTips'
 import styleFeature from './components/styleFeature'
 import makeLine from './components/makeLine'
+import hotHeat from './components/hotHeat'
+import olcontrol from './components/control'
 
 export default {
   name: 'app',
@@ -28,6 +30,8 @@ export default {
     iconAndTips,
     styleFeature,
     makeLine,
+    hotHeat,
+    olcontrol
   },
   data(){
     return {
@@ -61,9 +65,17 @@ export default {
           mapName:'地图icon2---style+feature',
           componentsName:'styleFeature'
         },
-         {
+        {
           mapName:'绘制一条线',
           componentsName:'makeLine'
+        },
+        {
+          mapName:'热力图',
+          componentsName:'hotHeat'
+        },
+        {
+          mapName:'控件',
+          componentsName:'olcontrol'
         },
 
         
