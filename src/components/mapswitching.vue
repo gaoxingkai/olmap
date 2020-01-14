@@ -82,8 +82,9 @@ export default {
       );
     },
     // 地图切换
+    
     switch2BingMap() {
-      // 先移除当前的地图，再添加Bing地图
+      // 先移除当前的地图，再添加Bing地图 //这个是一种思路，还有一种是直接添加两个图层到地图通过setVisible控制显示
       this.map.removeLayer(this.map.getLayers().item(0));
       this.map.addLayer(this.bingMapLayer);
     },

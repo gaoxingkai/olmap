@@ -19,6 +19,8 @@ import makeLine from './components/makeLine'
 import hotHeat from './components/hotHeat'
 import olcontrol from './components/control'
 import popupAlert from './components/popupAlert'
+import mouseEvent from './components/mouseEvent'
+import LineString from './components/LineString'
 
 export default {
   name: 'app',
@@ -33,7 +35,9 @@ export default {
     makeLine,
     hotHeat,
     olcontrol,
-    popupAlert
+    popupAlert,
+    mouseEvent,
+    LineString
   },
   data(){
     return {
@@ -82,6 +86,14 @@ export default {
         {
           mapName:'弹出层popup',
           componentsName:'popupAlert'
+        },
+        {
+          mapName:'鼠标事件',
+          componentsName:'mouseEvent'
+        },
+        {
+          mapName:'线段图层',
+          componentsName:'LineString'
         },
 
         
