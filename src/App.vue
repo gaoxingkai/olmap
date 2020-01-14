@@ -18,6 +18,7 @@ import styleFeature from './components/styleFeature'
 import makeLine from './components/makeLine'
 import hotHeat from './components/hotHeat'
 import olcontrol from './components/control'
+import popupAlert from './components/popupAlert'
 
 export default {
   name: 'app',
@@ -31,7 +32,8 @@ export default {
     styleFeature,
     makeLine,
     hotHeat,
-    olcontrol
+    olcontrol,
+    popupAlert
   },
   data(){
     return {
@@ -74,8 +76,12 @@ export default {
           componentsName:'hotHeat'
         },
         {
-          mapName:'控件',
+          mapName:'一些控件',
           componentsName:'olcontrol'
+        },
+        {
+          mapName:'弹出层popup',
+          componentsName:'popupAlert'
         },
 
         

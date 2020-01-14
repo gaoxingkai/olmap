@@ -92,7 +92,7 @@ export default {
             style: new Style({            // 设置绘制时的样式
                 stroke: new Stroke({
                     color: '#009933',
-                    size: 1
+                    size: 3
                 })
             }),
             maxPoints: 4    // 限制不超过4个点
