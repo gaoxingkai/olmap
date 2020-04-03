@@ -2,6 +2,16 @@
   <div class="hello">
     <div id="map">
         <button @click="optical_LayerShow">切换显示</button>
+        <button @click="consoleLayer">打印图层</button>
+        <div>
+          关于如何获取图层问题，简单来说就是我想要那个图层，我就能根据某一个属性获取到这个图层的实现思路，
+          如何获取指定属性的图层
+          layer继承了Object类，所以有set和get方法。可以在加载图层时，通过相应的layer.set(‘name’,‘name’)；
+          在获取图层时，遍历所有获取到的layer，并用layer.get(‘name’)即可获取到相应的图层。
+          记录的一个博客地址：https://blog.csdn.net/qq_29602347/article/details/100877952
+          提示：在打印的图层对象上并不能找到自己设置的相关的属性，需要通过get方法获取。
+          获取地图图层的方式和相关逻辑直接看代码逻辑。
+        </div>
     </div>
   </div>
 </template>
@@ -37,7 +47,7 @@ export default {
         [103.43432499265008, 30.68721368225242],
         [103.34534599265008, 30.61822105239542],
       ],
-      opticalShow:false,
+      opticalShow:true,
     }
   },
   created () {
@@ -55,8 +65,22 @@ export default {
             }else this.optical_Layer.setVisible(false);
             
       },
-    // map初始化
-    mapInit(){
+      consoleLayer(){
+        console.log("打印图层click")
+        console.log(this.map.getLayers().getArray());
+        /**
+         * 在获取图层时，遍历所有获取到的layer，并用layer.get(‘name’)即可获取到相应的图层。
+         * 
+         * 
+         * 
+         */
+        let thisMapLayers = this.map.getLayers().getArray(); // 获取到当前地图的所有图层。
+        thisMapLayers.map(v => {
+          console.log(v.get("layerId"));
+        })
+      },
+      // map初始化
+      mapInit(){
         // 线段初始化
           let optical_trackLine = new LineString([...this.pointList]);
           var optical_lineStyle = new Feature({
@@ -70,7 +94,7 @@ export default {
             }),
             visible: true
           });
-
+          this.optical_Layer.set("layerId","layer1");
        // 初始化layers
         let this_layers = new TileLayer(
                 {
@@ -78,6 +102,15 @@ export default {
                     visible: true //指示该图层是否可见
                 }
             )
+            this_layers.set("layerId","layer2"); // 
+/**
+ * 
+ * layer继承了Object类，所以有set和get方法。可以在加载图层时，通过相应的layer.set(‘name’,‘name’)；
+ * 在获取图层时，遍历所有获取到的layer，并用layer.get(‘name’)即可获取到相应的图层。
+ * 在consoleLayer事件中获取当前的layer图层；
+ * 
+ */
+
         // 初始化view
         this.view = new View({
             // 设置成都为地图中心，此处进行坐标转换， 把EPSG:4326的坐标，转换为EPSG:3857坐标，因为ol默认使用的是EPSG:3857坐标

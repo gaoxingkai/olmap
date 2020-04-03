@@ -62,6 +62,7 @@ export default {
         new TileLayer({
             source: new XYZ({ //加载地图的路径url
               url: "http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}"  //定义了一个图层,数据来源是url的地址。
+              // url:'http://192.168.1.203:8080/geoserver/gwc/service/wmts',
             }),
             visible: true //指示该图层是否可见
           })
@@ -78,7 +79,7 @@ export default {
         // 地图的view
       this.view = new View({
         projection: 'EPSG:4326', //使用这个坐标系
-        center: [103.9323, 30.67],    // 地图中心点的经纬度[经度，纬度]当前的这个经纬度为成都
+        center: [114.38,37.67],    // 地图中心点的经纬度[经度，纬度]当前的这个经纬度为成都
         zoom: 12,    //当前地图的放大层级为12级别
       })
       this.map = new Map({
@@ -98,8 +99,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   #map{
-    width: 400px;
-    height: 400px;
+    width: 600px;
+    height: 600px;
   }
 </style>
 <style>
