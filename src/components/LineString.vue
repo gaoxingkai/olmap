@@ -2,8 +2,8 @@
   <div class="hello">
     <div id="map">
         <button @click="optical_LayerShow">切换显示</button>
-        <button @click="consoleLayer">打印图层</button>
-        <div>
+        <button @click="consoleLayer">打印图层，并隐藏layerId为layer1的图层。</button>
+        <div v-if="false">
           关于如何获取图层问题，简单来说就是我想要那个图层，我就能根据某一个属性获取到这个图层的实现思路，
           如何获取指定属性的图层
           layer继承了Object类，所以有set和get方法。可以在加载图层时，通过相应的layer.set(‘name’,‘name’)；
@@ -51,7 +51,8 @@ export default {
     }
   },
   created () {
-    
+      let company = this.getDistance(103.99448599265008,30.66199163525242,103.89448599265008, 30.34534513525242)
+      console.log(company);
   },
   mounted(){
     this.mapInit(); //map初始化
@@ -63,20 +64,31 @@ export default {
             if(this.opticalShow){
                 this.optical_Layer.setVisible(true);
             }else this.optical_Layer.setVisible(false);
-            
+
       },
       consoleLayer(){
         console.log("打印图层click")
-        console.log(this.map.getLayers().getArray());
+        console.log(this.map.getLayers().getArray());  // 打印获取到的map图层。
         /**
          * 在获取图层时，遍历所有获取到的layer，并用layer.get(‘name’)即可获取到相应的图层。
-         * 
-         * 
-         * 
+         *
+         *
+         *
          */
         let thisMapLayers = this.map.getLayers().getArray(); // 获取到当前地图的所有图层。
         thisMapLayers.map(v => {
           console.log(v.get("layerId"));
+          /****
+           *
+           * 打印图层的时候如果当前的图层是线段的图层的话，隐藏图层。
+           *
+           *
+           * */
+          if(v.get("layerId") === "layer1"){
+            v.setVisible(false); // 隐藏当前图层。
+            this.opticalShow = false;
+            console.log("当前图层是线段图层");
+          }
         })
       },
       // map初始化
@@ -102,13 +114,13 @@ export default {
                     visible: true //指示该图层是否可见
                 }
             )
-            this_layers.set("layerId","layer2"); // 
+            this_layers.set("layerId","layer2"); //
 /**
- * 
+ *
  * layer继承了Object类，所以有set和get方法。可以在加载图层时，通过相应的layer.set(‘name’,‘name’)；
  * 在获取图层时，遍历所有获取到的layer，并用layer.get(‘name’)即可获取到相应的图层。
  * 在consoleLayer事件中获取当前的layer图层；
- * 
+ *
  */
 
         // 初始化view
@@ -119,7 +131,6 @@ export default {
             zoom: 10,
             projection:'EPSG:4326' //这个属性是指将ol的坐标用EPSG:4326的，若不指定，ol默认是EPSG:3857的,center的中心坐标如果是4326的就需要转化
         })
-
       this.map = new Map(
         {
             // logo: false, //设置地图logo不显示
@@ -129,7 +140,33 @@ export default {
             target: 'map'
         }
       );
-    }
+        // 地图的单击事件
+          /*
+          *
+          * 点击地图获取到当前点击的位置坐标，并划线，最后计算点击过的点之间的距离！
+          *
+          * **/
+          this.map.on('singleclick', (evt) => {  //地图的单击事件，地图事件的一个网址：https://blog.csdn.net/freeland1/article/details/50127427
+              // 这里必须用箭头函数，否则this的指向会有问题，因为之前出现错误，所以记录一下
+              console.log(evt.coordinate); //打印当前的位置坐标
+          });
+        /***
+         * 计算距离结束
+         *
+         * ***/
+    },
+      // 根据经纬度算出两个坐标值之间的距离
+      getDistance(lon1, lat1, lon2, lat2,){
+          let radLat1 = lat1*Math.PI / 180.0;
+          let radLat2 = lat2*Math.PI / 180.0;
+          let a = radLat1 - radLat2;
+          let b = lon1*Math.PI / 180.0 - lon2*Math.PI / 180.0;
+          let s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) +
+              Math.cos(radLat1)*Math.cos(radLat2)*Math.pow(Math.sin(b/2),2)));
+          s = s *6378.137 ;// EARTH_RADIUS;
+          s = Math.round(s * 10000) / 10000;
+          return s;
+      }
   }
 }
 </script>
@@ -142,7 +179,7 @@ export default {
 </style>
 <style>
 /* 地图刚开始不显示，查看高度为0，然后设置这个高度（不知道为啥以后在说） */
-  #map1 .ol-viewport{ 
+  #map1 .ol-viewport{
     height: 400px;
   }
 </style>

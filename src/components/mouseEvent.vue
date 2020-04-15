@@ -30,7 +30,7 @@ import Feature from 'ol/Feature';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import Point from 'ol/geom/Point';
-import fixedPosition from "@/assets/fixedPosition.png"
+import fixedPosition from "@/assets/icon_jian.png"
 
 export default {
   name: 'HelloWorld',
@@ -45,12 +45,7 @@ export default {
         view:null, //地图的view
         value1:true,
         pointList:[
-            [104.10515767097472, 30.64684479232292],
-            [104.04191118240352, 30.76162472608294],
-            [104.0265260314941, 30.72251195251964],
-            [104.00515767097472, 30.864674479232292],
-            [104.03191118240352, 30.96162472608204],
-            [104.0265262314941, 30.02281195251964]
+            
         ],
         station_msg:[],
         VectorLayerIcon:null,
@@ -62,7 +57,11 @@ export default {
     }
   },
   created () {
-    
+    for(let i = 0;i<=300;i++){
+      let longitude = 110 + Math.random() * 6;
+      let lat = 36.5 + Math.random() * 6;
+      this.pointList.push([longitude, lat]);
+    }
   },
   mounted(){
     this.mapInit(); //map初始化
@@ -90,7 +89,7 @@ export default {
         this.view = new View({
             // 设置成都为地图中心，此处进行坐标转换， 把EPSG:4326的坐标，转换为EPSG:3857坐标，因为ol默认使用的是EPSG:3857坐标
             // center: transform([104.06, 30.67], 'EPSG:4326', 'EPSG:3857'),
-            center:[104.06, 30.67],
+            center:[114.06, 37.67],
             projection:'EPSG:4326',
             zoom: 8
         })
@@ -103,8 +102,6 @@ export default {
                 target: 'map'
             }
         );
-
-
         //添加point点
         this.pointList.forEach((item)=>{
             this.station_msg.push(
@@ -124,10 +121,10 @@ export default {
             }),
             style: new Style({
               image: new Icon({
-                anchorXUnits: "fraction",
-                anchorYUnits: "pixels",
                 opacity: 0.95,
-                src: fixedPosition
+                src: fixedPosition,
+                scale: 0.5,
+                anchor:[0.5,1]
               }),
               cursor_: "pointer"
             })
@@ -171,8 +168,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   #map{
-    width: 600px;
-    height: 600px;
+    width: 1600px;
+    height: 1600px;
   }
   .deviceName {
     width: 200px;

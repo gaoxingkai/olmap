@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png" alt="">
+    <!-- <img src="./assets/logo.png" alt=""> -->
     <div class="buttonDiv">
       <button :class="current === item.componentsName?'activeButton':''" @click="tabMap(item)" v-for="(item,index) in mapList" :key="index">{{ item.mapName }}</button>
     </div>
-    <div :is="current"></div>
+    <div :is="current" :propsObj="propsObj"></div>
   </div>
 </template>
 
@@ -22,6 +22,7 @@ import olcontrol from './components/control'
 import popupAlert from './components/popupAlert'
 import mouseEvent from './components/mouseEvent'
 import LineString from './components/LineString'
+import labelAggregation from './components/labelAggregation'
 
 export default {
   name: 'app',
@@ -38,7 +39,8 @@ export default {
     olcontrol,
     popupAlert,
     mouseEvent,
-    LineString
+    LineString,
+    labelAggregation
   },
   data(){
     return {
@@ -95,10 +97,15 @@ export default {
         {
           mapName:'线段图层',
           componentsName:'LineString'
+        },{
+          mapName:'标注聚合',
+          componentsName:'labelAggregation'
         },
-
-        
-      ]
+      ],
+      propsObj:{
+        name:"app",
+        number:0
+      }
     }
   },
   methods:{
@@ -108,6 +115,14 @@ export default {
    tabMap(item){
      this.current = item.componentsName;
    },
+  },
+  watch: {
+      propsObj:{
+        handler(newVal) {
+          console.log(newVal);
+        },
+        deep:true
+      }
   }
 }
 </script>
@@ -119,7 +134,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 .activeButton{
   background:#2c3e50;

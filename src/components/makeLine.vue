@@ -39,7 +39,7 @@ export default {
     }
   },
   created () {
-    
+
   },
   mounted(){
     this.mapInit(); //map初始化
@@ -83,7 +83,7 @@ export default {
                     size: 1
                 })
             })
-        })
+        });
         this.map.addLayer(this.lineLayer);
         // 添加绘图的交互类
         this.lineDraw = new Draw({
@@ -100,11 +100,11 @@ export default {
         // 监听线绘制结束事件，获取坐标
         this.lineDraw .on('drawend', event => {
             // event.feature 就是当前绘制完成的线的Feature
-            this.points = JSON.stringify(event.feature.getGeometry().getCoordinates());
+            this.points = JSON.stringify(event.feature.getGeometry().getCoordinates()); // 获取到所有的坐标
         });
 
         this.map.addInteraction(this.lineDraw );
-      
+
     },
     // 取消绘制
     removeInteraction(){ //可以清除掉，但是清除了之后就不能再次绘制了
@@ -125,7 +125,7 @@ export default {
 </style>
 <style>
 /* 地图刚开始不显示，查看高度为0，然后设置这个高度（不知道为啥以后在说） */
-  #map1 .ol-viewport{ 
+  #map1 .ol-viewport{
     height: 400px;
   }
 </style>

@@ -34,11 +34,11 @@ export default {
       view:null, //地图的view
       overlay:[],//
       contentHtml:''
-      
+
     }
   },
   created () {
-    
+
   },
   mounted(){
     this.mapInit(); //map初始化
@@ -80,7 +80,7 @@ export default {
         );
         this.map.on('singleclick', (evt) => {  //地图的单击事件，地图事件的一个网址：https://blog.csdn.net/freeland1/article/details/50127427
             // 这里必须用箭头函数，否则this的指向会有问题，因为之前出现错误，所以记录一下
-            var coordinate = evt.coordinate; //这个是3857坐标，可以用transform进行坐标转换
+            var coordinate = evt.coordinate; //这个是3857坐标，可以用transform进行坐标转换(如果这个地图是以4326坐标系建立的那这个就是4326的坐标)
             console.log(evt.coordinate);
             let coor4326 = transform(coordinate, 'EPSG:3857', 'EPSG:4326')
             console.log('转换之后的坐标为：',coor4326); //[经度,纬度]
@@ -154,7 +154,7 @@ export default {
 </style>
 <style>
 /* 地图刚开始不显示，查看高度为0，然后设置这个高度（不知道为啥以后在说） */
-  #map1 .ol-viewport{ 
+  #map1 .ol-viewport{
     height: 400px;
   }
 </style>

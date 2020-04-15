@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <div id="map">
-
+      <input type="text" v-model="propsObj.number">
     </div>
   </div>
 </template>
@@ -18,6 +18,7 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String,
+    propsObj:Object
   },
   data(){
     return {
@@ -68,8 +69,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   #map{
-    width: 600px;
-    height: 600px;
+    width: 1200px;
+    height: 1200px;
   }
 </style>
 <style>
